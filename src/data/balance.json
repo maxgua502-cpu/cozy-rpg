@@ -1,0 +1,5 @@
+{
+  "hero": { "startHp": 60, "startGold": 50 },
+  "defeat": { "goldPenalty": 0.1 },
+  "xp": { "curveBase": 100, "curveExp": 1.5 }
+}

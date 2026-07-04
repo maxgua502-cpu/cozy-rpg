@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 import meadow from '../data/zones/meadow.json';
 import { VirtualJoystick } from '../ui/VirtualJoystick.js';
+import { getState } from '../systems/gameState.js';
+import { mobRegistry } from '../systems/content.js';
 
 // World: топ-даун мир. Карта берётся из JSON-зоны (контент = данные).
 // Сцена отвечает только за отображение и ввод; боевая/прочая логика — в systems.
@@ -31,14 +33,19 @@ export class WorldScene extends Phaser.Scene {
       this.trees.push(tree);
     }
 
-    // Персонаж-плейсхолдер.
-    this.player = this.add.rectangle(zone.spawn.x, zone.spawn.y, PLAYER_SIZE, PLAYER_SIZE, 0xf4c430);
+    // Мобы на карте (кроме уже добытых). Наступил — начинается бой.
+    this.spawnMobs(zone);
+
+    // Персонаж-плейсхолдер. Появляется на сохранённом месте (после боя) или на спавне.
+    const start = getState().playerPos ?? zone.spawn;
+    this.player = this.add.rectangle(start.x, start.y, PLAYER_SIZE, PLAYER_SIZE, 0xf4c430);
     this.player.setStrokeStyle(3, 0x9c6b1f);
     this.physics.add.existing(this.player);
     this.player.body.setCollideWorldBounds(true);
     this.player.body.setSize(PLAYER_SIZE, PLAYER_SIZE);
 
     this.physics.add.collider(this.player, this.trees);
+    this.physics.add.overlap(this.player, this.mobSprites, this.onMobTouch, null, this);
 
     // Камера следует за персонажем в пределах карты.
     this.cameras.main.setBounds(0, 0, zone.width, zone.height);
@@ -59,6 +66,8 @@ export class WorldScene extends Phaser.Scene {
 
     // Маркеры для smoke- и движение-тестов Playwright.
     window.__gameReady = true;
+    window.__scene = 'World';
+    window.__state = getState();
     window.__world = {
       spawn: { ...zone.spawn },
       trees: zone.trees.map((t) => ({ x: t.x, y: t.y })),
@@ -66,6 +75,39 @@ export class WorldScene extends Phaser.Scene {
       playerSize: PLAYER_SIZE,
     };
     this.updatePlayerMarker();
+  }
+
+  // Мобы-плейсхолдеры (красные квадраты с именем). Добытые в этой сессии не появляются.
+  spawnMobs(zone) {
+    const cleared = getState().clearedMobs;
+    this.mobSprites = this.physics.add.group();
+    for (const spot of zone.mobs ?? []) {
+      if (cleared.includes(spot.iid)) continue;
+      const def = mobRegistry[spot.mob];
+      const sprite = this.add.rectangle(spot.x, spot.y, 40, 40, 0xb5443a);
+      sprite.setStrokeStyle(3, 0x7a2822);
+      sprite.iid = spot.iid;
+      sprite.mobId = spot.mob;
+      this.mobSprites.add(sprite);
+      this.add
+        .text(spot.x, spot.y - 32, def ? def.name : spot.mob, {
+          fontFamily: 'sans-serif',
+          fontSize: '13px',
+          color: '#f5efe0',
+          backgroundColor: '#00000055',
+          padding: { x: 4, y: 2 },
+        })
+        .setOrigin(0.5);
+    }
+  }
+
+  onMobTouch(player, mob) {
+    if (this.battleStarting) return;
+    this.battleStarting = true;
+    // Сохраняем позицию, чтобы вернуться на то же место, и уходим в бой.
+    getState().playerPos = { x: Math.round(this.player.x), y: Math.round(this.player.y) };
+    this.player.body.setVelocity(0, 0);
+    this.scene.start('Battle', { mobId: mob.mobId, iid: mob.iid });
   }
 
   // Земля-плейсхолдер: заливка + сетка для ощущения скролла + рамка мира.

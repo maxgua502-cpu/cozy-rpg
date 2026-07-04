@@ -1,0 +1,10 @@
+{
+  "id": "forest_goblin",
+  "hp": 45,
+  "creatures": [
+    { "species": "base_dama", "count": null },
+    { "species": "bold_knight", "count": 3 }
+  ],
+  "xp": 20,
+  "drop": { "gold": [5, 12] }
+}

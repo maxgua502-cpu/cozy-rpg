@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { BootScene } from './scenes/BootScene.js';
 import { WorldScene } from './scenes/WorldScene.js';
+import { BattleScene } from './scenes/BattleScene.js';
 
 // Точка входа. Логика игры живёт в src/systems (чистый JS, без Phaser);
 // сцены отвечают только за отображение и ввод (см. CLAUDE.md, столп архитектуры №1).
@@ -21,7 +22,7 @@ const config = {
     default: 'arcade',
     arcade: { debug: false },
   },
-  scene: [BootScene, WorldScene],
+  scene: [BootScene, WorldScene, BattleScene],
 };
 
 // eslint-disable-next-line no-new

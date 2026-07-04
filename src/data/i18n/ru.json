@@ -1,0 +1,29 @@
+{
+  "type.dragon": "Драконы",
+  "type.dama": "Дамы",
+  "type.knight": "Рыцари",
+
+  "creature.base_dragon": "Дракончик",
+  "creature.base_dama": "Дама",
+  "creature.base_knight": "Рыцарь",
+  "creature.flame_dragon": "Огнедракон",
+  "creature.storm_dragon": "Грозодракон",
+  "creature.guard_dama": "Дама-страж",
+  "creature.mist_dama": "Туманная дама",
+  "creature.bold_knight": "Дерзкий рыцарь",
+
+  "mob.meadow_slime": "Луговой слизень",
+  "mob.forest_goblin": "Лесной гоблин",
+  "mob.thorn_boar": "Колючий вепрь",
+
+  "battle.round": "Раунд",
+  "battle.draw": "Ничья",
+  "battle.youWin": "Победа!",
+  "battle.youLose": "Поражение",
+  "battle.pickHint": "Выбери, кем ходить",
+  "battle.continue": "Продолжить",
+  "battle.vs": "против",
+  "battle.rewardGold": "золото",
+  "battle.rewardXp": "опыт",
+  "battle.penaltyGold": "потеряно золота"
+}

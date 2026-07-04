@@ -1,0 +1,10 @@
+{
+  "id": "thorn_boar",
+  "hp": 60,
+  "creatures": [
+    { "species": "base_dragon", "count": null },
+    { "species": "guard_dama", "count": 2 }
+  ],
+  "xp": 28,
+  "drop": { "gold": [8, 16] }
+}

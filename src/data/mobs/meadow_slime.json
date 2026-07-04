@@ -1,0 +1,7 @@
+{
+  "id": "meadow_slime",
+  "hp": 30,
+  "creatures": [{ "species": "base_knight", "count": null }],
+  "xp": 12,
+  "drop": { "gold": [3, 8] }
+}

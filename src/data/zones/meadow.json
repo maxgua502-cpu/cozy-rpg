@@ -5,6 +5,11 @@
   "height": 1200,
   "tile": 64,
   "spawn": { "x": 800, "y": 600 },
+  "mobs": [
+    { "iid": "m1", "mob": "meadow_slime", "x": 600, "y": 600 },
+    { "iid": "m2", "mob": "forest_goblin", "x": 1050, "y": 850 },
+    { "iid": "m3", "mob": "thorn_boar", "x": 1150, "y": 350 }
+  ],
   "trees": [
     { "x": 940, "y": 600 },
     { "x": 300, "y": 300 },
