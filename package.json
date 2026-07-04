@@ -1,0 +1,23 @@
+{
+  "name": "cozy-rpg",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Уютная браузерная RPG — топ-даун мир, пошаговый бой, зверинец, лут-цикл, крафт",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "phaser": "^4.2.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "vite": "^6.0.0",
+    "vitest": "^2.1.0"
+  }
+}
