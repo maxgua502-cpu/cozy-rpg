@@ -17,6 +17,10 @@ const config = {
   render: {
     pixelArt: true,
   },
+  physics: {
+    default: 'arcade',
+    arcade: { debug: false },
+  },
   scene: [BootScene, WorldScene],
 };
 
